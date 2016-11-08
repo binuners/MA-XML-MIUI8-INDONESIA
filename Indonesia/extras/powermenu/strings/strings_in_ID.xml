@@ -1,0 +1,13 @@
+<resources>
+    <string name="label_airplane_mode">Pesawat</string>
+    <string name="label_silent_mode">Diam</string>
+    <string name="label_reboot">Mulai ulang</string>
+	<string name="label_recovery">Recovery</string>
+	<string name="label_fastboot">Fastboot</string>
+    <string name="label_shutdown">Matikan</string>
+    <string name="label_alert_reboot">Reboot</string>
+    <string name="label_alert_shutdown">Matikan daya</string>
+	<string name="label_alert_recovery">Masuk mode Recovery</string>
+    <string name="label_alert_fastboot">Masuk mode Fastboot</string>
+    <string name="label_blank">Kosong</string>
+</resources>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MusicView version="2" frameRate="0" screenWidth="1080">
+	<Var name="progress" expression="ifelse(#music_control.music_state,ifelse(#music_control.music_duration,#music_control.music_position/#music_control.music_duration,0),#progress)"/>
+	<Var name="show_no_title" expression="isnull(@music_control.title)"/>
+	<Var name="btn_width" expression="150"/>
+	<Var name="album_width" expression="946"/>
+	<Var name="padding_side" expression="(#view_width-#album_width)/2"/>
+	<Button w="#view_width" h="#view_height">
+		<Triggers>
+			<Trigger action="up">
+				<ExternCommand command="click"/>
+			</Trigger>
+		</Triggers>
+	</Button>
+	<MusicControl name="music_control" autoShow="true" defAlbumCover="default_album.png" enableLyric="true" updateLyricInterval="1000">
+		<Text x="#padding_side" y="165" size="48" color="#d9ffffff" alignV="center" text="@no_title" visibility="#show_no_title"/>
+		<Text x="#padding_side" y="236" size="34" color="#66ffffff" alignV="center" text="@no_artist" visibility="#show_no_title"/>
+		<Text name="title" x="#padding_side" y="165" w="ifelse(gt(#title.text_width,946),920,946)" size="48" color="#d9ffffff" alignV="center" text="@music_control.title" visibility="not(#show_no_title)"/>
+		<Text name="author" x="#padding_side" y="236" w="ifelse(gt(#author.text_width,946),920,946)" size="34" color="#66ffffff" alignV="center" textExp="@music_control.artist+ifelse(or(isnull(@music_control.artist),isnull(@music_control.album)),'','丨')+@music_control.album" visibility="not(#show_no_title)"/>
+
+		<Text x="#padding_side+920" y="165" size="48" color="#d9ffffff" alignV="center" text="..." visibility="gt(#title.text_width,946)"/>
+		<Text x="#padding_side+920" y="236" size="34" color="#66ffffff" alignV="center" text="..." visibility="gt(#author.text_width,946)"/>
+		<Button name="music_prev" x="#padding_side-16" y="306" w="#btn_width*not(#music_control.disable_prev)" h="#btn_width" alignChildren="true" alpha="255-191*#music_control.disable_prev" interceptTouch="true">
+			<Normal>
+				<Image src="player_btn_n.png" x="75" y="75" align="center" alignV="center"/>
+				<Image src="player_btn_prev.png" x="75" y="75" align="center" alignV="center"/>
+			</Normal>
+			<Pressed>
+				<Image src="player_btn_p.png" x="75" y="75" align="center" alignV="center"/>
+				<Image src="player_btn_prev.png" x="75" y="75" align="center" alignV="center"/>
+			</Pressed>
+			<Triggers>
+				<Trigger action="up">
+					<ExternCommand command="track_music_prev" strPara="@music_control.package"/>
+				</Trigger>
+			</Triggers>
+		</Button>
+		<Button name="music_play" x="#padding_side-16+#btn_width+27" y="306" w="#btn_width*not(#music_control.disable_play)" h="#btn_width" alignChildren="true" alpha="255-191*#music_control.disable_play" interceptTouch="true">
+			<Normal>
+				<Image src="player_btn_n.png" x="75" y="75" align="center" alignV="center"/>
+				<Image src="player_btn_play.png" x="75" y="75" align="center" alignV="center"/>
+			</Normal>
+			<Pressed>
+				<Image src="player_btn_p.png" x="75" y="75" align="center" alignV="center"/>
+				<Image src="player_btn_play.png" x="75" y="75" align="center" alignV="center"/>
+			</Pressed>
+			<Triggers>
+				<Trigger action="up">
+					<ExternCommand command="track_music_play" strPara="@music_control.package"/>
+				</Trigger>
+			</Triggers>
+		</Button>
+		<Button name="music_pause" x="#padding_side-16+#btn_width+27" y="306" w="#btn_width*not(#music_control.disable_play)" h="#btn_width" alignChildren="true" alpha="255-191*#music_control.disable_play" interceptTouch="true">
+			<Normal>
+				<Image src="player_btn_n.png" x="75" y="75" align="center" alignV="center"/>
+				<Image src="player_btn_pause.png" x="75" y="75" align="center" alignV="center"/>
+			</Normal>
+			<Pressed>
+				<Image src="player_btn_p.png" x="75" y="75" align="center" alignV="center"/>
+				<Image src="player_btn_pause.png" x="75" y="75" align="center" alignV="center"/>
+			</Pressed>
+			<Triggers>
+				<Trigger action="up">
+					<ExternCommand command="track_music_pause" strPara="@music_control.package"/>
+				</Trigger>
+			 </Triggers>
+		</Button>
+		<Button name="music_next" x="#padding_side-16+#btn_width+27+#btn_width+27" y="306" w="#btn_width*not(#music_control.disable_next)" h="#btn_width" alpha="255-191*#music_control.disable_next" alignChildren="true" interceptTouch="true">
+			<Normal>
+				<Image src="player_btn_n.png" x="75" y="75" align="center" alignV="center"/>
+				<Image src="player_btn_next.png" x="75" y="75" align="center" alignV="center"/>
+			</Normal>
+			<Pressed>
+				<Image src="player_btn_p.png" x="75" y="75" align="center" alignV="center"/>
+				<Image src="player_btn_next.png" x="75" y="75" align="center" alignV="center"/>
+			</Pressed>
+			<Triggers>
+				<Trigger action="up">
+					<ExternCommand command="track_music_next" strPara="@music_control.package"/>
+				</Trigger>
+			</Triggers>
+		</Button>
+		<Button name="music_rate" x="#view_width-#padding_side+16" align="right" y="306" w="#btn_width" h="#btn_width" alignChildren="true" visibility="eq(#music_control.user_rating_style,1)"  interceptTouch="true">
+			<Normal>
+				<Image src="player_btn_n.png" x="75" y="75" align="center" alignV="center"/>
+			</Normal>
+			<Pressed>
+				<Image src="player_btn_p.png" x="75" y="75" align="center" alignV="center"/>
+			</Pressed>
+			<Image src="player_btn_heart_selected.png" x="75" y="75" align="center" alignV="center" visibility="#music_control.user_rating_value"/>
+			<Image src="player_btn_heart_unselected.png" x="75" y="75" align="center" alignV="center" visibility="not(#music_control.user_rating_value)"/>
+			<Triggers>
+				<Trigger action="up">
+					<MethodCommand target="music_control" method="ratingHeart" />
+					<ExternCommand command="track_music_rate" strPara="@music_control.package"/>
+				</Trigger>
+			</Triggers>
+		</Button>
+		<Image name="music_album_cover" x="#view_width/2" y="977" w="#album_width" h="#album_width" align="center" alignV="center"/>
+		<Rectangle x="#view_width/2" y="977" w="#album_width" h="#album_width" align="center" alignV="center" strokeColor="#26ffffff" fillColor="#1A000000" weight="1" strokeAlign="inner"/>
+		<Image x="#view_width/2" y="1450" w="#album_width" align="center" alignV="bottom" src="lrc_shadow.png" visibility="not(isnull(@music_control.lyric_next))"/>
+		<Text name="lyric_current" x="#view_width/2" y="1308" w="900" size="38" color="#d9ffffff" align="center" textExp="@music_control.lyric_current" multiLine="true" spacingMult="1.5"/>
+		<Text x="#view_width/2" y="1366" w="900" size="38" color="#4dffffff" align="center" textExp="@music_control.lyric_next" multiLine="true" visibility="le(#lyric_current.text_width,900)"/>
+		<Group visibility="0*or(#progress,#music_control.music_duration,eqs(@music_control.package,'com.miui.player'))">
+			<Var name="position_hour" expression="int((#music_control.music_position+500)/3600000)"/>
+			<Var name="position_minute" expression="int((#music_control.music_position+500)/60000%60)"/>
+			<Var name="position_second" expression="int((#music_control.music_position+500)/1000%60)"/>
+			<Var name="duration_hour" expression="int((#music_control.music_duration+500)/3600000)"/>
+			<Var name="duration_minute" expression="int((#music_control.music_duration+500)/60000%60)"/>
+			<Var name="duration_second" expression="int((#music_control.music_duration+500)/1000%60)"/>
+			<Text x="#view_width/2-473" y="1508" alignV="center" size="25" bold="true" color="#ffffff" alpha="128" format="%02d:%02d" params="#position_minute,#position_second" visibility="not(#duration_hour)"/>
+			<Text x="#view_width/2-473" y="1508" alignV="center" size="25" bold="true" color="#ffffff" alpha="128" formatExp="'%0'+max(2,len(#duration_hour))+'d:%02d:%02d'" params="#position_hour,#position_minute,#position_second" visibility="#duration_hour"/>
+			<Text x="#view_width/2+473" y="1508" align="right" alignV="center" size="25" bold="true" color="#ffffff" alpha="128" format="%02d:%02d" params="#duration_minute,#duration_second" visibility="not(#duration_hour)"/>
+			<Text name="long_duration_text" x="#view_width/2+473" y="1508" align="right" alignV="center" size="25" bold="true" color="#ffffff" alpha="128" format="%02d:%02d:%02d" params="#duration_hour, #duration_minute,#duration_second" visibility="#duration_hour"/>
+			<Var name="progress_bar_width" expression="920-2*ifelse(#duration_hour,#long_duration_text.text_width,70)"/>
+			<Line x="#view_width/2-#progress_bar_width/2" y="1512.5" x1="#view_width/2-#progress_bar_width/2+#progress*#progress_bar_width" y1="1512.5" strokeColor="#ffffff" alpha="229" weight="3"/>
+			<Line x="#view_width/2-#progress_bar_width/2" y="1512.5" x1="#view_width/2+#progress_bar_width/2" y1="1512.5" strokeColor="#ffffff" alpha="64" weight="3"/>
+		</Group>
+	</MusicControl>
+</MusicView>

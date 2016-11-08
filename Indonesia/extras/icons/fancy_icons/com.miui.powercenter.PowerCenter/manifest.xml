@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 注意：需要对.9图编译 -->
+
+<Icon version="1" frameRate="0" width="136" height="136" resDensity="320" extraResourcesDensity="320,480,640" extraResources="sw1536-den320:den320:1.235" extraScaleByDensity="480:1.412,640:1.647" extraScales="sw1536-den320:1.235" useVariableUpdater="Battery">
+    <VariableBinders>
+        <BroadcastBinder action="miui.intent.action.BATTERY_CONFIG_CHANGED" >
+            <Variable name="battery_level" type="int" extra="battery_level" default="0"/>
+        </BroadcastBinder>
+    </VariableBinders>
+
+    <Var name="bar_height" expression="45/100*#battery_level"/>
+    <Image src="bg.png"/>
+    <Image visibility="1" src="normal.9.png" h="#bar_height" align="center" alignV="bottom" x="68" y="94"/>
+</Icon>
